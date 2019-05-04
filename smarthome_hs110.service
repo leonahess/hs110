@@ -1,0 +1,14 @@
+[Unit]
+Description=Reads various sensors and writes to InfluxDB
+After=network.target
+
+[Service]
+Type=simple
+User=leonhess
+WorkingDirectory=/home/leonhess/HS110Flux/
+ExecStart=/usr/bin/python3 /home/leonhess/smarthome/hs110/smarthome_hs110.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
