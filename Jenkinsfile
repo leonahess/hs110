@@ -52,10 +52,8 @@ pipeline {
       }
     }
     stage('Deploy') {
-      post {
-        always {
-          echo "To be implemented"
-        }
+      steps {
+
       }
     }
   }
