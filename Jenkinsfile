@@ -51,10 +51,5 @@ pipeline {
         sh "docker rmi leonhess/hs110:${env.BUILD_NUMBER}"
       }
     }
-    stage('Deploy') {
-      steps {
-
-      }
-    }
   }
 }
