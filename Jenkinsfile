@@ -25,8 +25,8 @@ pipeline {
         label "Pi_3"
       }
       steps {
-        sh "docker push fx8350:5000/hs110:latest"
         sh "docker push fx8350:5000/hs110:${env.BUILD_NUMBER}"
+        sh "docker push fx8350:5000/hs110:latest"
       }
     }
     stage('Push to DockerHub') {
