@@ -54,5 +54,17 @@ pipeline {
         sh "docker rmi leonhess/hs110:${env.BUILD_NUMBER}"
       }
     }
+    stage('Deploy to leon-raspi-cluster-3') {
+      agent {
+        label "master"
+      }
+      steps {
+        sshagent(credentials: ['d4eb3f5d-d0f5-4964-8bad-038f0d774551']) {
+          sh "ssh -o StrictHostKeyChecking=no pi@leon-raspi-cluster-3 docker kill hs110"
+          sh "ssh -o StrictHostKeyChecking=no pi@leon-raspi-cluster-3 docker rm hs110"
+          sh "ssh -o StrictHostKeyChecking=no pi@leon-raspi-cluster-3 docker run --restart always -d --name=hs110 --privileged fx8350:5000/hs110:latest"
+        }
+      }
+    }
   }
 }
