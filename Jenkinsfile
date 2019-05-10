@@ -23,23 +23,27 @@ pipeline {
         sh "docker tag hs110 leonhess/hs110:${env.BUILD_NUMBER}"
       }
     }
-    stage('Push to local Registry') {
-      agent {
-        label "Pi_3"
-      }
-      steps {
-        sh "docker push fx8350:5000/hs110:${env.BUILD_NUMBER}"
-        sh "docker push fx8350:5000/hs110:latest"
-      }
-    }
-    stage('Push to DockerHub') {
-      agent {
-        label "Pi_3"
-      }
-      steps {
-        withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-          sh "docker push leonhess/hs110:${env.BUILD_NUMBER}"
-          sh "docker push leonhess/hs110:latest"
+    stage('Push Registries') {
+      parallel {
+        stage('Push to local Registry') {
+          agent {
+            label "Pi_3"
+          }
+          steps {
+            sh "docker push fx8350:5000/hs110:${env.BUILD_NUMBER}"
+            sh "docker push fx8350:5000/hs110:latest"
+          }
+        }
+        stage('Push to DockerHub') {
+          agent {
+            label "Pi_3"
+          }
+          steps {
+            withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+              sh "docker push leonhess/hs110:${env.BUILD_NUMBER}"
+              sh "docker push leonhess/hs110:latest"
+            }
+          }
         }
       }
     }
