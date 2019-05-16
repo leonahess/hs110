@@ -1,0 +1,11 @@
+- hosts: database
+  tasks:
+    - name: Running the Container
+      docker_container:
+        image: fx8350:5000/hs110:latest
+        name: hs110
+        state: started
+        network_mode: host
+        restart_policy: always
+        force_kill: yes
+        hostname: "{{ ansible_hostname }}"
