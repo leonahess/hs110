@@ -7,18 +7,38 @@ print("< connected to influx!")
 print("> checking if database '{}' exists ...".format(config.influx_database))
 
 database_list = client.get_list_database()
-database_exists = False
+retention_list = client.get_list_retention_policies()
+smarthome_exists = False
 
 for s in range(0, len(database_list)):
-    if database_list[s]['name'] == config.influx_database:
-        database_exists = True
+    if database_list[s]['name'] == 'smarthome':
+        smarthome_exists = True
+        print("< database 'smarthome' exists")
+        print("> checking retention policy")
 
-        print("< database '{}' exists".format(config.influx_database))
+        for rp in range(0, len(retention_list)):
+            if retention_list[rp]['name'] == config.influx_retention_policy:
+                print("< correct retention policy exists")
+            else:
+                print("< correct retention policy does not exists")
+                print("> creating correct retention policy")
 
-if not database_exists:
-    print("< database '{}' does not exist!".format(config.influx_database))
-    print("> creating database '{}' ...".format(config.influx_database))
+                client.create_retention_policy(config.influx_retention_policy, config.influx_retention_policy, 1,
+                                               database="smarthome")
 
-    client.create_database(config.influx_database)
+                print("< created correct retention policy")
 
-    print("< created database '{}'!".format(config.influx_database))
+if not smarthome_exists:
+
+    print("< database 'smarthome' does not exist!")
+    print("> creating database 'smarthome' ...")
+
+    client.create_database('smarthome')
+
+    print("< created database 'smarthome'!")
+    print("> creating correct retention policy")
+
+    client.create_retention_policy(config.influx_retention_policy, config.influx_retention_policy, 1,
+                                   database="smarthome")
+
+    print("< created correct retention policy")
