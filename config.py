@@ -1,7 +1,7 @@
 influx_ip = "192.168.66.133"
 influx_database = "smarthome"
 influx_port = "8086"
-influx_retention_policy = "3m"
+influx_retention_policy = "12w"
 
 '''
 possible retention intervals:
