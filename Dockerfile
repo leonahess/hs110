@@ -1,6 +1,9 @@
 FROM python:alpine
 
-ADD . .
+ADD app ./app
+ADD config.py .
+ADD smarthome_hs110.py .
+ADD requirements.txt .
 
 WORKDIR .
 

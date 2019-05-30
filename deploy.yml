@@ -8,4 +8,5 @@
         network_mode: host
         restart_policy: always
         force_kill: yes
+        pull: yes
         hostname: "{{ ansible_hostname }}"
