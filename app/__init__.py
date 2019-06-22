@@ -14,8 +14,6 @@ for s in range(0, len(database_list)):
     if database_list[s]['name'] == 'smarthome':
         smarthome_exists = True
         print("< database 'smarthome' exists")
-        print("> checking retention policy")
-
 
 if not smarthome_exists:
 
@@ -29,6 +27,7 @@ if not smarthome_exists:
 retention_list = client.get_list_retention_policies("smarthome")
 database_list = client.get_list_database()
 
+print("> checking retention policy")
 for s in range(0, len(database_list)):
     if database_list[s]['name'] == 'smarthome':
         for rp in range(0, len(retention_list)):
