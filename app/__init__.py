@@ -29,7 +29,7 @@ if not smarthome_exists:
 retention_list = client.get_list_retention_policies("smarthome")
 database_list = client.get_list_database()
 
-for s in range(0, len(database_list):
+for s in range(0, len(database_list)):
     if database_list[s]['name'] == 'smarthome':
         for rp in range(0, len(retention_list)):
             if retention_list[rp]['name'] == config.influx_retention_policy:
