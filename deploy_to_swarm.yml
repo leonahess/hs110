@@ -1,0 +1,10 @@
+- hosts: database
+  tasks:
+    - name: Running the Service
+      docker_swarm_service:
+        image: fx8350:5000/hs110:latest
+        name: hs110
+        state: present
+        replicas: 1
+        network_mode: host
+        hostname: "{{ ansible_hostname }}"
