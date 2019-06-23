@@ -1,4 +1,4 @@
-- hosts: database
+- hosts: swarm
   tasks:
     - name: Running the Service
       docker_swarm_service:
@@ -6,5 +6,6 @@
         name: hs110
         state: present
         replicas: 1
-        network_mode: host
+        networks:
+          - host
         hostname: "{{ ansible_hostname }}"
