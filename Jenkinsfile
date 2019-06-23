@@ -58,14 +58,14 @@ pipeline {
         sh "docker rmi leonhess/hs110:${env.BUILD_NUMBER}"
       }
     }
-    stage('Deploy to leon-raspi-cluster-3') {
+    stage('Deploy to swarm') {
       agent {
         label "master"
       }
       steps {
         ansiblePlaybook(
-          playbook: 'deploy.yml',
-          credentialsId: 'd4eb3f5d-d0f5-4964-8bad-038f0d774551'
+          playbook: 'deploy_to_swarm.yml',
+          credentialsId: '78c069cd-77c4-4c91-89cc-7805f3c9cfe2'
           )
         }
       }
