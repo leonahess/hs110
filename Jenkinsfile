@@ -18,9 +18,7 @@ pipeline {
       }
       steps {
         sh "docker tag hs110 fx8350:5000/hs110:latest"
-        sh "docker tag hs110 fx8350:5000/hs110:${env.BUILD_NUMBER}"
         sh "docker tag hs110 leonhess/hs110:latest"
-        sh "docker tag hs110 leonhess/hs110:${env.BUILD_NUMBER}"
       }
     }
     stage('Push Registries') {
@@ -30,7 +28,6 @@ pipeline {
             label "Pi_3"
           }
           steps {
-            sh "docker push fx8350:5000/hs110:${env.BUILD_NUMBER}"
             sh "docker push fx8350:5000/hs110:latest"
           }
         }
@@ -40,7 +37,6 @@ pipeline {
           }
           steps {
             withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-              sh "docker push leonhess/hs110:${env.BUILD_NUMBER}"
               sh "docker push leonhess/hs110:latest"
             }
           }
@@ -53,9 +49,7 @@ pipeline {
       }
       steps {
         sh "docker rmi fx8350:5000/hs110:latest"
-        sh "docker rmi fx8350:5000/hs110:${env.BUILD_NUMBER}"
         sh "docker rmi leonhess/hs110:latest"
-        sh "docker rmi leonhess/hs110:${env.BUILD_NUMBER}"
       }
     }
     stage('Deploy to swarm') {
